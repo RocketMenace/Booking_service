@@ -10,4 +10,4 @@ class Table(database.Base):
     name: Mapped[str] = mapped_column(String(length=50), nullable=False)
     location: Mapped[str] = mapped_column(String(length=50), nullable=False)
     seats: Mapped[int] = mapped_column(Integer)
-    reservations = relationship("Reservation",back_populates="table")
+    reservations = relationship("Reservation", back_populates="table")
