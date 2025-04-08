@@ -1,0 +1,16 @@
+from sqlalchemy import ForeignKey, Integer, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from app.config.db import database
+
+
+class Reservation(database.Base):
+    __tablename__ = "reservations"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True, autoincrement=True)
+    customer_name: Mapped[str] = mapped_column(String(length=50), nullable=False)
+    table_id: Mapped[int] = mapped_column(ForeignKey("tables.id"), nullable=False)
+    table = relationship(
+        "Table", back_populates="reservation", uselist=False, cascade="all, delete-orphan"
+    )
+    duration_minutes: Mapped[int] = mapped_column(Integer)

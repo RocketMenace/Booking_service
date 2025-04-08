@@ -2,8 +2,9 @@ from contextlib import asynccontextmanager
 
 from sqlalchemy import text
 from sqlalchemy.exc import ProgrammingError
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.ext.asyncio import (AsyncSession, async_sessionmaker,
+                                    create_async_engine)
+from sqlalchemy.orm import declarative_base
 
 from app.config.settings import config
 
@@ -50,9 +51,9 @@ class Database:
             await conn.run_sync(self.Base.metadata.drop_all)
         print("Database CLEARED!!!!")
 
-    # @asynccontextmanager
+    @asynccontextmanager
     async def get_session(self):
-        async_session = sessionmaker(self.engine, class_=AsyncSession)
+        async_session = async_sessionmaker(self.engine, class_=AsyncSession)
         session = None
         try:
             session = async_session()
@@ -73,6 +74,6 @@ database = Database()
 
 
 async def setup_db():
-    await database.create_db("swipematch")
+    await database.create_db("booking_service")
     await database.ping_db()
     await database.create_tables()
