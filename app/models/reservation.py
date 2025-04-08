@@ -12,8 +12,7 @@ class Reservation(database.Base):
     table_id: Mapped[int] = mapped_column(ForeignKey("tables.id"), nullable=False)
     table = relationship(
         "Table",
-        back_populates="reservation",
+        back_populates="reservations",
         uselist=False,
-        cascade="all, delete-orphan",
     )
     duration_minutes: Mapped[int] = mapped_column(Integer)

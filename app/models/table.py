@@ -2,6 +2,7 @@ from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.config.db import database
+from app.models.reservation import Reservation
 
 
 class Table(database.Base):
@@ -10,4 +11,4 @@ class Table(database.Base):
     name: Mapped[str] = mapped_column(String(length=50), nullable=False)
     location: Mapped[str] = mapped_column(String(length=50), nullable=False)
     seats: Mapped[int] = mapped_column(Integer)
-    reservations = relationship("Reservation", back_populates="table")
+    reservations: Mapped[list["Reservation"]] = relationship(back_populates="table", cascade="all, delete-orphan")
