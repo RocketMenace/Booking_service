@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "booking-service"
+version = "0.1.0"
+description = ""
+authors = ["RocketMenace <grizzlygit777@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = {extras = ["standard"], version = "^0.115.12"}
+asyncpg = "^0.30.0"
+sqlalchemy = "^2.0.40"
+
+
+[tool.poetry.group.dev.dependencies]
+isort = "^6.0.1"
+ruff = "^0.11.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
