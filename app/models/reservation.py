@@ -1,5 +1,6 @@
-from sqlalchemy import ForeignKey, Integer, String
+from sqlalchemy import ForeignKey, Integer, String, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from datetime import datetime, timezone
 
 from app.config.db import database
 
@@ -15,4 +16,5 @@ class Reservation(database.Base):
         back_populates="reservations",
         uselist=False,
     )
-    duration_minutes: Mapped[int] = mapped_column(Integer)
+    reservation_time: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    duration_minutes: Mapped[int] = mapped_column(Integer, nullable=False)

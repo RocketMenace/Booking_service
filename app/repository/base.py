@@ -1,8 +1,10 @@
 from typing import Annotated, Any
 
 from fastapi import Depends
+from  sqlalchemy import select, insert
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing_extensions import TypeVar
+from watchfiles import awatch
 
 from app.config.db import database
 
@@ -21,4 +23,13 @@ class BaseRepository:
     async def add_one(self, data: dict[str, Any]):
         async with self.session as session:
             async with session.begin():
-                session.add(self.model(**data))
+                stmt = insert(self.model).values(data).returning(self.model)
+                res = await session.execute(stmt)
+                return res.scalar().__dict__
+
+
+    async def get_all(self):
+        async with self.session as session:
+            stmt = select(self.model)
+            res = await session.execute(stmt)
+            return res.scalars().all()

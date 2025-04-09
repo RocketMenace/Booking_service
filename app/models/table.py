@@ -11,4 +11,6 @@ class Table(database.Base):
     name: Mapped[str] = mapped_column(String(length=50), nullable=False)
     location: Mapped[str] = mapped_column(String(length=50), nullable=False)
     seats: Mapped[int] = mapped_column(Integer)
-    reservations: Mapped[list["Reservation"]] = relationship(back_populates="table", cascade="all, delete-orphan")
+    reservations: Mapped[list["Reservation"]] = relationship(
+        back_populates="table", cascade="all, delete-orphan"
+    )
