@@ -1,12 +1,12 @@
 from typing import Annotated, Any
 
 from fastapi import Depends
-from  sqlalchemy import select, insert
+from sqlalchemy import insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing_extensions import TypeVar
-from watchfiles import awatch
 
 from app.config.db import database
+from app.core.exceptions import NotFoundError
 
 DBModel = TypeVar("DBModel", bound=database.Base)
 
@@ -27,9 +27,16 @@ class BaseRepository:
                 res = await session.execute(stmt)
                 return res.scalar().__dict__
 
-
     async def get_all(self):
         async with self.session as session:
             stmt = select(self.model)
             res = await session.execute(stmt)
             return res.scalars().all()
+
+    async def delete_one(self, id: int):
+        async with self.session as session:
+            async with session.begin():
+                obj = await session.get(self.model, id)
+                if not obj:
+                    raise NotFoundError(detail=f"Object with id: {id} not found")
+                return await session.delete(obj)

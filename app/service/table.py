@@ -16,3 +16,6 @@ class TableService:
 
     async def get_tables(self):
         return await self.repository.get_all()
+
+    async def delete_table(self, table_id: int):
+        return await self.repository.delete_one(table_id)

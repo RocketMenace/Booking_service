@@ -1,6 +1,7 @@
-from sqlalchemy import ForeignKey, Integer, String, DateTime
-from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime, timezone
+
+from sqlalchemy import DateTime, ForeignKey, Integer, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.config.db import database
 
