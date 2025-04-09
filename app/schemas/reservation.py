@@ -1,4 +1,5 @@
 from pydantic import BaseModel, ConfigDict
+from datetime import datetime
 
 from app.schemas.table import Table
 
@@ -7,6 +8,7 @@ class ReservationBase(BaseModel):
     customer_name: str
     table_id: int
     duration_minutes: int
+    reservation_time: datetime
 
 
 class ReservationIn(ReservationBase):
@@ -16,4 +18,4 @@ class ReservationIn(ReservationBase):
 class Reservation(ReservationBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
-    table: Table
+
