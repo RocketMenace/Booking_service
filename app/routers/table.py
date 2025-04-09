@@ -18,6 +18,6 @@ async def get_tables(service: Annotated[TableService, Depends()]):
     return await service.get_tables()
 
 
-@router.delete(path="{table_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete(path="/{table_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_table(table_id: int, service: Annotated[TableService, Depends()]):
     return await service.delete_table(table_id)

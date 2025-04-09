@@ -1,7 +1,7 @@
 from typing import Annotated, Any
 
 from fastapi import Depends
-from sqlalchemy import insert, select
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing_extensions import TypeVar
 
@@ -23,16 +23,13 @@ class BaseRepository:
     async def add_one(self, data: dict[str, Any]):
         async with self.session as session:
             async with session.begin():
-                stmt = insert(self.model).values(data).returning(self.model)
-                res = await session.execute(stmt)
-                return res.scalar().__dict__
+                session.add(self.model(**data))
 
     async def get_all(self):
         async with self.session as session:
-            stmt = select(self.model)
-            res = await session.execute(stmt)
-            return res.scalars().all()
-
+            result = await session.execute(select(self.model))
+            return result.scalars().all()
+        
     async def delete_one(self, id: int):
         async with self.session as session:
             async with session.begin():
@@ -40,3 +37,4 @@ class BaseRepository:
                 if not obj:
                     raise NotFoundError(detail=f"Object with id: {id} not found")
                 return await session.delete(obj)
+        

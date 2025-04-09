@@ -18,6 +18,6 @@ async def get_reservations(service: Annotated[ReservationService, Depends()]):
     return await service.get_reservations()
 
 
-@router.delete(path="{reservation_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete(path="/{reservation_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_table(reservation_id: int, service: Annotated[ReservationService, Depends()]):
     return await service.delete_reservation(reservation_id)
