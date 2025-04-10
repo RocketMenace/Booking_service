@@ -1,7 +1,7 @@
 from typing import Annotated, Any
 
 from fastapi import Depends
-from sqlalchemy import select, insert
+from sqlalchemy import insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing_extensions import TypeVar
 

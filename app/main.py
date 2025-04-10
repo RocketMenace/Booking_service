@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.config.db import database, setup_db
-from app.routers import table, reservation
+from app.routers import reservation, table
 
 
 @asynccontextmanager
