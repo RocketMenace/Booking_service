@@ -4,8 +4,7 @@ from typing import Annotated
 from fastapi import Depends
 from sqlalchemy import text
 from sqlalchemy.exc import ProgrammingError
-from sqlalchemy.ext.asyncio import (AsyncSession, async_sessionmaker,
-                                    create_async_engine)
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import declarative_base
 
 from app.config.settings import config
@@ -14,8 +13,9 @@ DATABASE_URL = f"postgresql+asyncpg://{config.POSTGRES_USER}:{config.POSTGRES_PA
 
 
 class Database:
-    def __init__(self):
-        self.engine = create_async_engine(DATABASE_URL, echo=True, future=True)
+    def __init__(self, database_url):
+        self.database_url = database_url
+        self.engine = create_async_engine(self.database_url, echo=True, future=True)
         self.Base = declarative_base()
 
     async def create_db(self, db_name: str):
@@ -72,13 +72,13 @@ class Database:
         print("Database connection closed")
 
 
-database = Database()
+database = Database(DATABASE_URL)
 
 
-async def setup_db():
-    await database.create_db("booking_service")
-    await database.ping_db()
-    await database.create_tables()
+# async def setup_db():
+#     await database.create_db("booking_service")
+#     await database.ping_db()
+#     await database.create_tables()
 
 
-SessionDep = Annotated[AsyncSession, Depends(database.get_session)]
+# SessionDep = Annotated[AsyncSession, Depends(database.get_session)]

@@ -1,12 +1,16 @@
 import pytest
 from httpx import ASGITransport, AsyncClient
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
-from app.config.db import database
+from app.config.db import Database
 from app.config.settings import config
 from app.main import app
+from app.models.table import Table
 
 TEST_DATABASE_URL = f"postgresql+asyncpg://{config.POSTGRES_USER}:{config.POSTGRES_PASSWORD}@{config.POSTGRES_SERVER}:{config.POSTGRES_PORT}/test_booking_service"
+
+database = Database(TEST_DATABASE_URL)
 
 
 @pytest.fixture(scope="session")
@@ -27,10 +31,10 @@ async def async_engine():
 @pytest.fixture(scope="session")
 async def setup_db(async_engine):
     async with async_engine.begin() as conn:
-        await conn.run_sync(config.Base.metadata.create_all)
+        await conn.run_sync(database.Base.metadata.create_all)
     yield
     async with async_engine.begin() as conn:
-        await conn.run_sync(config.Base.metadata.drop_all)
+        await conn.run_sync(database.Base.metadata.drop_all)
 
 
 @pytest.fixture
@@ -47,20 +51,7 @@ async def db_session(setup_db, async_engine):
 
 
 @pytest.fixture
-def override_get_db(db_session):
-    async def _override_get_db():
-        try:
-            yield db_session
-        finally:
-            pass
-
-    return _override_get_db
-
-
-@pytest.fixture
-async def client(override_get_db):
-    app.dependency_overrides[database.get_session] = override_get_db
-
+async def client():
     async with AsyncClient(
         transport=ASGITransport(app=app),
         base_url="http://127.0.0.1:8000/api",
@@ -68,4 +59,9 @@ async def client(override_get_db):
     ) as client:
         yield client
 
-    app.dependency_overrides.clear()
+
+@pytest.fixture
+async def get_table_id(db_session):
+    res = await db_session.execute(select(Table))
+    table_id = res.scalars().first().id
+    return table_id
