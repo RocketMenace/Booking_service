@@ -18,6 +18,3 @@ app = FastAPI(title="Booking service API", lifespan=db_lifespan, root_path="/api
 
 app.include_router(table.router)
 app.include_router(reservation.router)
-
-
-

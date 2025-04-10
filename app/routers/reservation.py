@@ -9,7 +9,9 @@ router = APIRouter(prefix="/reservations", tags=["Reservations"])
 
 
 @router.post(path="", status_code=status.HTTP_201_CREATED, response_model=Reservation)
-async def create_reservation(data: ReservationIn, service: Annotated[ReservationService, Depends()]):
+async def create_reservation(
+    data: ReservationIn, service: Annotated[ReservationService, Depends()]
+):
     return await service.add_reservation(data)
 
 
@@ -19,5 +21,7 @@ async def get_reservations(service: Annotated[ReservationService, Depends()]):
 
 
 @router.delete(path="/{reservation_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_table(reservation_id: int, service: Annotated[ReservationService, Depends()]):
+async def delete_table(
+    reservation_id: int, service: Annotated[ReservationService, Depends()]
+):
     return await service.delete_reservation(reservation_id)

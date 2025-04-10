@@ -3,6 +3,7 @@ from fastapi import Depends
 from app.repository.reservation import ReservationRepository
 from app.schemas.reservation import ReservationIn
 
+
 class ReservationService:
     def __init__(self, repository: Annotated[ReservationRepository, Depends()]):
         self.repository = repository

@@ -17,5 +17,7 @@ class Reservation(database.Base):
         back_populates="reservations",
         uselist=False,
     )
-    reservation_time: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    reservation_time: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
     duration_minutes: Mapped[int] = mapped_column(Integer, nullable=False)
