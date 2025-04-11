@@ -20,12 +20,12 @@ def create_table_docs(router):
                             "name": "Window View #5",
                             "location": "Near the fireplace",
                             "seats": 4,
-                            "is_active": True
+                            "is_active": True,
                         }
                     }
-                }
+                },
             },
-        }
+        },
     )
     def decorator(func):
         func.__doc__ = """
@@ -40,4 +40,3 @@ def create_table_docs(router):
         return func
 
     return decorator
-
