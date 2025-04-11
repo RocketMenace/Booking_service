@@ -4,11 +4,13 @@ from fastapi import APIRouter, Depends, status
 
 from app.schemas.table import Table, TableIn
 from app.service.table import TableService
+from app.routers.table_docs import create_table_docs
 
 router = APIRouter(prefix="/tables", tags=["Tables"])
 
 
 @router.post(path="", status_code=status.HTTP_201_CREATED, response_model=Table)
+@create_table_docs(router)
 async def create_table(data: TableIn, service: Annotated[TableService, Depends()]):
     return await service.add_table(data)
 

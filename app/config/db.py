@@ -1,10 +1,9 @@
 from contextlib import asynccontextmanager
-from typing import Annotated
 
-from fastapi import Depends
 from sqlalchemy import text
 from sqlalchemy.exc import ProgrammingError
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import (AsyncSession, async_sessionmaker,
+                                    create_async_engine)
 from sqlalchemy.orm import declarative_base
 
 from app.config.settings import config
