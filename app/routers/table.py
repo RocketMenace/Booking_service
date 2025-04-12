@@ -10,7 +10,7 @@ router = APIRouter(prefix="/tables", tags=["Tables"])
 
 
 @router.post(path="", status_code=status.HTTP_201_CREATED, response_model=Table)
-@create_table_docs(router)
+# @create_table_docs(router)
 async def create_table(data: TableIn, service: Annotated[TableService, Depends()]):
     return await service.add_table(data)
 

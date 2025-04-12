@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta
 
-from sqlalchemy import DDL, DateTime, ForeignKey, Integer, String, Computed
+from sqlalchemy import DateTime, ForeignKey, Integer, String, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.ext.hybrid import hybrid_property
 
 from app.config.db import database
 
@@ -21,6 +22,8 @@ class Reservation(database.Base):
         DateTime(timezone=True), nullable=False
     )
     duration_minutes: Mapped[int] = mapped_column(Integer, nullable=False)
-    end_time: Mapped[datetime] = mapped_column(DateTime(timezone=True), Computed(f"reservation_time + duration_minutes"))
+
+
+
 
     
