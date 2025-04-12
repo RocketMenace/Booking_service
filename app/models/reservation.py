@@ -1,8 +1,7 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String, text
+from sqlalchemy import DDL, DateTime, ForeignKey, Integer, String, Computed
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.ext.hybrid import hybrid_property
 
 from app.config.db import database
 
@@ -22,8 +21,3 @@ class Reservation(database.Base):
         DateTime(timezone=True), nullable=False
     )
     duration_minutes: Mapped[int] = mapped_column(Integer, nullable=False)
-
-
-
-
-    
