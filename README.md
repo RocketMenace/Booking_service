@@ -17,6 +17,28 @@ A FastAPI-based service for managing restaurant table bookings, with PostgreSQL 
 - **Migrations**: Alembic
 - **Containerization**: Docker
 
+## Getting Started
+
+### Prerequisites
+
+- Docker and Docker Compose
+- Python 3.12
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/restaurant-booking-service.git
+   cd restaurant-booking-service
+   
+2.  Setup environment variables:
+    ```bash
+    cp .env.example .env
+    
+3. Build and start the services:
+    ```bash
+    docker-compose up --build
+
 ## API Endpoints
 
 ### Tables Management
@@ -41,20 +63,8 @@ A FastAPI-based service for managing restaurant table bookings, with PostgreSQL 
 ```json
 {
   "name": Luxury,
-  "location": Behind fireplac,
+  "location": Behind fireplace,
   "seats": 4
 }
 
-## Getting Started
 
-### Prerequisites
-
-- Docker and Docker Compose
-- Python 3.12
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/restaurant-booking-service.git
-   cd restaurant-booking-service
