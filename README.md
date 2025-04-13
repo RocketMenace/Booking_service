@@ -44,3 +44,17 @@ A FastAPI-based service for managing restaurant table bookings, with PostgreSQL 
   "location": Behind fireplac,
   "seats": 4
 }
+
+## Getting Started
+
+### Prerequisites
+
+- Docker and Docker Compose
+- Python 3.12
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/restaurant-booking-service.git
+   cd restaurant-booking-service
