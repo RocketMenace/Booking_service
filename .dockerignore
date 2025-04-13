@@ -1,0 +1,11 @@
+.editorconfig
+.gitignore
+.idea
+venv
+.git
+.envs/
+.coverage
+poetry.lock
+__pycache__/
+*.py[cod]
+*$py.class
